@@ -52,7 +52,7 @@ agent any
 
             steps {
 
-               sh "dotnet build"
+               sh "dotnet build eShopOnWeb.sln"
 
             }  
 
