@@ -1,9 +1,3 @@
-def project_folder = "/var/lib/jenkins/workspace/sample@2/src"
-
-def JOB_NAME = 'DotnetSample'
-
-def backup_folder = '/var/lib/jenkins/workspace/webbackup'
-
 pipeline {
 
 
@@ -62,20 +56,50 @@ agent any
 
             }  
 
-        }  
+           
 
-        stage ('create backup') {
-            steps {
-                script {
-                    echo "Copying project as backup"
-                    sh "mkdir ${backup_folder}/${JOB_NAME}_${currentBuild.number}"
-                    sh "cp -r ${project_folder} ${backup_folder}/${JOB_NAME}_${currentBuild.number}"
+            }
+
+
+
+        stage('Quality Analysis') {
+
+            parallel {
+
+                // run Sonar Scan and Integration tests in parallel.
+
+                stage('Integration Test') {
+
+                    steps {
+
+                        echo 'Run integration tests here...'
+
+                    }
+
                 }
-            }
-        }
+
+
+
+        stage ('Declarative Post Options') {
+
+            steps {
+
+                script {
+
+                    echo 'Sending Post Build Notifications'
+
+                }
+
+            }  
+
+           
 
             }
+
+    }
+
 }
 
+    }
 
-         
+}
